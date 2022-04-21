@@ -1,0 +1,72 @@
+  {% include 'db_head.html' %}
+  {% load mathfilters %}
+       <div class="container" >
+                    <div class="checkout-address" style="padding-top:80px;">
+                        <div class="title-left">
+                            <h3>SEARCH EVENT</h3>
+                        </div>
+						
+                        <form method="post"> {% csrf_token %}
+                         <input type="text" name="search" class="form-control" 
+						 placeholder="Enter Event ID" required>
+                            
+                        <input type="submit" class="btn btn-primary py-3 px-5" value="SEARCH EVENT" style="margin:20px 0;"></form>
+                    </div> 
+
+
+			 <div class="table-responsive " style="display:block !important;">
+                <table class="table table-bordered">
+                    <thead style="background:#6c757d;color: #FFF">
+                        <tr class="white">
+                            <th scope="col" >S.No</th>
+							<th scope="col">Event ID</th>
+                            <th scope="col">Worker ID</th>
+							<th scope="col">Customer ID</th>
+							<th scope="col">Customer Name</th>
+							<th scope="col">Worker Name</th>
+							<th scope="col">Phone</th>
+							<th scope="col" >Job</th>
+							<th scope="col">Total Amount</th>
+							<th scope="col">Amount Paid</th>
+							<th scope="col">Balance Amount</th>
+							<th scope="col">Address</th>
+							<th scope="col">Event Status</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {% for i in a %}
+                        <tr style="background:#FFF;color: #000">
+                            <th scope="row">{{forloop.counter}}</th>
+							<td>{{i.event_id}}</td>
+							<td>{{i.worker_id}}</td>
+							<td>{{i.customer_id.customer_id}}</td>
+							<td>{{i.customer_id}}</td>
+                            <td>{{i.worker_name}}</td>
+                            <td>{{i.phone}}</td>
+							<td>{{i.job}}</td>
+							<td>{{i.tot_amount}} Rs</td>
+							<td>{{i.paid}} Rs</td>
+							<td>{% with a=i.tot_amount %}   
+								{% with b=i.paid %} 
+ 								{{ a|sub:b }} Rs
+							{% endwith %}{% endwith %}</td>
+							<td>{{i.address}}</td>
+							<td>{% if i.customer_id.status == 'Progress' %}
+							<span class="badge badge-warning">{{i.customer_id.status}}</span>
+							{% elif i.customer_id.status == 'Finished' %}
+							<span class="badge badge-success">{{i.customer_id.status}}</span>
+							{% elif i.customer_id.status == 'Closed' %}
+							<span class="badge badge-danger">{{i.customer_id.status}}</span>
+							{% endif %}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center bg-success">No Events</td>
+                        </tr>
+                       {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+					</div>
+  {% include 'footer.html' %}
+     

@@ -1,0 +1,21 @@
+{% include 'header.html'%}
+<div class="container" style="margin:0 auto;padding-top:100px;">
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" >
+    <div class="card" >
+        <h5 class="card-header">Event Details</h5>
+        <div class="card-body">
+           <div class="row">
+				{% for i in a %}
+					<div class="col-md-4">
+						<a href="{% url 'event_details' pk=i.order_id %}"><img src="/media/{{i.event_name.image}}" style="width:100%;">
+						</a><h3 style="padding-top:20px"> {{i.order_id}}</h3>
+						<h4> {{i.event_name}}</h4>
+						<p><i>{{i.event_date}} & {{i.event_time}}</i></p>
+						<h4>{{i.customer_name}} & {{i.customer_id}}</h4>
+					</div>
+				{% endfor %}
+		   </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,26 @@
+{% include 'header.html'%}
+<div class="container" style="margin:0 auto;padding-top:100px;">
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" >
+    <div class="card" >
+        <h5 class="card-header">Event Status</h5>
+        <div class="card-body">
+           <div class="row">
+				{% for i in a %}
+					<div class="col-md-3">
+						<h4>{{i.order_id}}</h4>
+						<h3>{{i.customer_id}}</h3>
+						{% if i.status == 'Progress' %}
+							<span class="badge badge-warning">{{i.status}}</span>
+							{% elif i.status == 'Finished' %}
+							<span class="badge badge-success">{{i.status}}</span>
+							{% elif i.status == 'Closed' %}
+							<span class="badge badge-danger">{{i.status}}</span>
+							{% endif %}
+					</div>
+					
+				{% endfor %}
+		   </div>
+        </div>
+    </div>
+</div>
+</div>

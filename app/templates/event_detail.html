@@ -1,0 +1,26 @@
+{% include 'header.html'%}
+<div class="container" style="margin:0 auto;padding-top:100px;">
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" >
+    <div class="card" >
+        <h5 class="card-header">Event Details</h5>
+        <div class="card-body">
+           <div class="row">
+				{% for i in a %}
+					<div class="col-md-3">
+						<a href="{% url 'workers' pk=i.order_id cus_id=i.id %}" class="btn btn-primary btn-block">Workers</a>
+					</div>
+					<div class="col-md-3">
+						<a href="{% url 'customer_detail' %}?event_id={{i.order_id}}" class="btn btn-success btn-block">Customer</a>
+					</div>
+					<div class="col-md-3">
+						<a href="{% url 'event_status' pk=i.order_id %}" class="btn btn-danger btn-block">Event Status</a>
+					</div>
+					<div class="col-md-3">
+						<a href="{% url 'single_profit' pk=i.order_id %}" class="btn btn-warning btn-block">Profit</a>
+					</div>
+				{% endfor %}
+		   </div>
+        </div>
+    </div>
+</div>
+</div>

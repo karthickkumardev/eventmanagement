@@ -1,0 +1,104 @@
+{% include 'header.html'%}
+{% load mathfilters %}
+<div class="container" style="margin:0 auto;padding-top:100px;">
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" >
+    <div class="card" >
+        <h5 class="card-header">Report</h5>
+        <div class="card-body">
+            <div class="table-responsive " style="display:block !important;">
+                <table class="table table-bordered">
+                    <thead style="background:blue;color: #FFF">
+                        <tr class="white">
+                            <th scope="col" >S.No</th>
+                            <th scope="col">Customer ID</th>
+							<th scope="col">Customer Name</th>
+							<th scope="col">Phone</th>
+							<th scope="col" >Event ID</th>
+							<th scope="col">Amount</th>
+							<th scope="col">Amount Paid</th>
+							<th scope="col">Balance</th>
+							<th scope="col">Worker ID</th>
+							<th scope="col">Worker Name</th>
+							<th scope="col">Total Amount</th>
+							<th scope="col">Paid</th>
+							<th scope="col">Balance</th>
+							<th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {% for i in row %}
+                        <tr style="background:#FFF;color: #000">
+                            <th scope="row">{{forloop.counter}}</th>
+							<td>{{i.1}}</td>
+                            <td>{{i.2}}</td>
+                            <td>{{i.3}}</td>
+							<td>{{i.0}}</td>
+							<td>{{i.4}} Rs</td>
+							<td>{{i.5}} Rs</td>
+							<td>{% with a=i.4 %}   
+								{% with b=i.5 %} 
+ 								{{ a|sub:b }} Rs
+							{% endwith %}{% endwith %}</td>
+							<td>{{i.6}}</td>
+                            <td>{{i.7}}</td>
+							<td>{{i.8}}</td>
+							<td>{{i.9}}</td>
+							<td>{% with c=i.8 %}   
+								{% with d=i.9 %} 
+ 								{{ c|sub:d }} Rs
+							{% endwith %}{% endwith %}</td>
+							<td>{% if i.10 == 'Progress' %}
+							<span class="badge badge-warning">{{i.10}}</span>
+							{% elif i.10 == 'Finished' %}
+							<span class="badge badge-success">{{i.10}}</span>
+							{% elif i.10 == 'Closed' %}
+							<span class="badge badge-danger">{{i.10}}</span>
+							{% endif %}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center bg-primary">No Customers</td>
+                        </tr>
+                       {% endfor %}
+                    </tbody>
+                </table>
+            </div><br><br>
+			 <div class="col-lg-8 col-sm-12" style="float:right;">
+                    <div class="order-box">
+                        <h3 style="color:#ff3ca6;">Profit Calculation</h3><br>
+						<div class="d-flex">
+                            <h4>Customer Total Amount </h4>
+                            <div class="ml-auto font-weight-bold"> Rs {{ tot.amount__sum }} </div>
+                        </div>
+                        <div class="d-flex">
+                            <h4>Customer Total Amount Paid</h4>
+                            <div class="ml-auto font-weight-bold"> Rs {{ paid.amount_paid__sum }} </div>
+                        </div>
+						 <div class="d-flex">
+                            <h4>Worker Total Amount </h4>
+                            <div class="ml-auto font-weight-bold">  Rs {{ w_tot.tot_amount__sum }} </div>
+                        </div>
+                        <div class="d-flex">
+                            <h4>Worker Total Amount Paid</h4>
+                            <div class="ml-auto font-weight-bold">  Rs {{ w_pay.paid__sum }} </div>
+                        </div>
+						<div class="d-flex">
+                            <h4></h4>
+                            <div class="ml-auto font-weight-bold">Profit  =  Customer Total Amount Paid - Worker Total Amount Paid </div>
+                        </div>
+                        <hr>
+                        <div class="d-flex gr-total" style="color:green;font-weight:bold;">
+                            <h5 style="font-size:20px;">Profit</h5>
+                            <div class="ml-auto h5"> {% with a=paid.amount_paid__sum %}   
+								{% with b=w_pay.paid__sum %} 
+ 								<span style="font-size:20px;">Rs {{ a|sub:b }} </span>
+							{% endwith %}{% endwith %}
+							
+							</div>
+                        </div>
+                        <hr> </div>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
